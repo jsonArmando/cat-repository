@@ -1,0 +1,10 @@
+# Ignorar dependencias, logs, y resultados de compilación locales
+node_modules
+npm-debug.log
+dist
+
+# Archivos de configuración local y de git
+.env
+.DS_Store
+.git
+.gitignore

@@ -1,0 +1,7 @@
+# Ignorar dependencias, logs y archivos de configuración local
+node_modules
+npm-debug.log
+dist
+.DS_Store
+.env
+.vscode

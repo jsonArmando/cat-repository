@@ -1,0 +1,30 @@
+<header class="app-header">
+  <div class="header-content">
+    
+    <div class="header-brand">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="brand-icon">
+        <path d="M11.75 2.5a.75.75 0 01.75.75V4h-1.5V3.25a.75.75 0 01.75-.75zM15 8.25a.75.75 0 01.75-.75h1.5a.75.75 0 010 1.5h-1.5a.75.75 0 01-.75-.75zM8.25 7.5a.75.75 0 000 1.5h-1.5a.75.75 0 000-1.5h1.5zM4 12a1 1 0 011 1v2.5a1 1 0 01-2 0V13a1 1 0 011-1zM20 12a1 1 0 011 1v2.5a1 1 0 11-2 0V13a1 1 0 011-1zM7 17a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zm10 0a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1z"></path>
+        <path fill-rule="evenodd" d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11 11-4.925 11-11S18.075 1 12 1zM2.5 12a9.5 9.5 0 019.5-9.5V12h9.5a9.5 9.5 0 01-9.5 9.5V12H2.5z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="brand-title">{{ title }}</span>
+    </div>
+
+    <nav class="header-nav">
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <a routerLink="/breeds" routerLinkActive="active" class="nav-link">Explorador</a>
+        <a routerLink="/profile" routerLinkActive="active" class="nav-link">Mi Perfil</a>
+        <a (click)="logout()" class="nav-link logout-btn">Cerrar Sesión</a>
+      </ng-container>
+
+      <ng-container *ngIf="!authService.isLoggedIn()">
+        <a routerLink="/login" routerLinkActive="active" class="nav-link">Iniciar Sesión</a>
+      </ng-container>
+    </nav>
+
+  </div>
+</header>
+
+
+<main class="main-content">
+  <router-outlet></router-outlet>
+</main>

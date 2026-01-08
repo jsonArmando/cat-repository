@@ -1,0 +1,26 @@
+.profile-container {
+  padding: 32px;
+  display: flex;
+  justify-content: center;
+}
+
+.profile-card {
+  width: 500px;
+  max-width: 100%;
+}
+
+.profile-avatar {
+  background-color: #4b89ff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .mat-icon {
+    transform: scale(1.5);
+  }
+}
+
+.error-message {
+  color: #f44336;
+}

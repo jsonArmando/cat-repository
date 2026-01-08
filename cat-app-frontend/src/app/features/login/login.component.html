@@ -1,0 +1,39 @@
+<div class="login-container">
+  <mat-card class="login-card">
+    <mat-card-header>
+      <mat-icon mat-card-avatar>pets</mat-icon>
+      <mat-card-title>Iniciar Sesión</mat-card-title>
+      <mat-card-subtitle>Bienvenido a Cat Explorer</mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <form (ngSubmit)="onSubmit()">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput type="email" [(ngModel)]="email" name="email" required placeholder="tu@email.com">
+          <mat-icon matSuffix>email</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Contraseña</mat-label>
+          <input matInput type="password" [(ngModel)]="password" name="password" required>
+          <mat-icon matSuffix>lock</mat-icon>
+        </mat-form-field>
+
+        <div *ngIf="errorMessage" class="error-message">
+          {{ errorMessage }}
+        </div>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Ingresar</span>
+          <mat-progress-spinner *ngIf="isLoading" mode="indeterminate" diameter="24"></mat-progress-spinner>
+        </button>
+
+      </form>
+    </mat-card-content>
+    <mat-card-actions align="end">
+      <a class="register-link" routerLink="/register">¿No tienes una cuenta? Regístrate</a>
+    </mat-card-actions>
+  </mat-card>
+</div>

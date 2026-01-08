@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  # Servicio para el Backend
+  backend:
+    build:
+      context: ./CAT-API-BACKEND  # Ruta a la carpeta del backend
+      dockerfile: Dockerfile
+    container_name: cat_api_backend
+    restart: unless-stopped
+    env_file:
+      - ./CAT-API-BACKEND/.env  # Carga las variables de entorno desde el archivo .env del backend
+    ports:
+      - "3000:3000" # Mapea el puerto 3000
+    networks:
+      - app-network
+
+  # Servicio para el Frontend
+  frontend:
+    build:
+      context: ./cat-app-frontend # Ruta a la carpeta del frontend
+      dockerfile: Dockerfile
+    container_name: cat_app_frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80" # Mapea el puerto 8080 de tu PC al 80 del contenedor Nginx
+    depends_on:
+      - backend # Le dice a Docker que inicie el backend antes que el frontend
+    networks:
+      - app-network
+
+# Define la red que usarán los contenedores para comunicarse
+networks:
+  app-network:
+    driver: bridge

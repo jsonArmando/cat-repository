@@ -1,0 +1,238 @@
+/* Archivo: breeds-explorer.component.scss */
+
+// Paleta de colores y variables para un tema claro y profesional
+:host {
+  --primary-color: #4b89ff;
+  --text-primary: #1f2937;
+  --text-secondary: #6b7280;
+  --bg-color: #ffffff;
+  --surface-color: #f9fafb;
+  --border-color: #e5e7eb;
+  --font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+// Contenedor principal de la página
+.explorer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  font-family: var(--font-family);
+  color: var(--text-primary);
+}
+
+// Estilo de las secciones principales
+section {
+  margin-bottom: 48px;
+}
+
+// Estilos para la sección de selección inicial
+.selection-section {
+  h1 {
+    font-size: 2.25rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 1.125rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .breed-select {
+    width: 320px;
+    max-width: 100%;
+  }
+}
+
+// Grid de detalles (Imagen + Info)
+.details-grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) 2fr;
+  gap: 32px;
+  align-items: start;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr; // Apilar en pantallas pequeñas
+  }
+}
+
+// Columna de la imagen
+.image-column {
+  .image-container.main-image-wrapper {
+    width: 100%;
+    aspect-ratio: 1 / 1; // Imagen cuadrada
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: var(--surface-color);
+    border: 1px solid var(--border-color);
+    position: relative; // Needed for absolute positioning of buttons
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .carousel-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(255, 255, 255, 0.7);
+      color: #333;
+      z-index: 2;
+      
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+
+      &.prev-btn { left: 10px; }
+      &.next-btn { right: 10px; }
+    }
+
+    .image-counter {
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      background-color: rgba(0, 0, 0, 0.6);
+      color: white;
+      padding: 4px 8px;
+      border-radius: 12px;
+      font-size: 0.8rem;
+    }
+  }
+  .no-images-placeholder {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--surface-color);
+    color: var(--text-secondary);
+    border-radius: 12px;
+    border: 1px dashed var(--border-color);
+    mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 8px;
+    }
+  }
+}
+
+// Columna de información
+.info-column {
+  padding-top: 8px;
+
+  .breed-name {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .breed-origin {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+  }
+  .info-block {
+    margin-bottom: 24px;
+    h3 {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+  }
+  .breed-description {
+    line-height: 1.6;
+    font-size: 1rem;
+    color: var(--text-primary);
+  }
+  .temperament-chip {
+    --mdc-chip-label-text-color: var(--primary-color);
+    --mdc-chip-container-color: color-mix(in srgb, var(--primary-color) 10%, transparent);
+  }
+}
+
+// Sección de la tabla y el filtro
+.table-section {
+  h2 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .filter-container {
+    .filter-input {
+      width: 100%;
+    }
+  }
+  .table-wrapper {
+    margin-top: 24px;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    overflow: hidden; // Para que el borde redondeado funcione con la tabla
+  }
+  .breeds-table {
+    width: 100%;
+    th.mat-header-cell {
+      background-color: var(--surface-color);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    td.mat-cell {
+      color: var(--text-primary);
+      border-bottom-color: var(--border-color);
+    }
+    tr.mat-row {
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+      &:hover {
+        background-color: var(--surface-color);
+      }
+    }
+    .temperament-cell {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 400px;
+    }
+  }
+}
+
+// Spinner global
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 48px;
+}
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #fff5f5; // Un fondo rojizo muy claro
+  border: 1px solid #fecaca; // Un borde rojo claro
+  color: #991b1b; // Texto rojo oscuro
+  margin-bottom: 24px;
+
+  mat-icon {
+    color: #ef4444; // Icono rojo
+  }
+}
+
+// Pequeño ajuste para el paginador
+:host ::ng-deep {
+  .mat-mdc-paginator {
+    background-color: var(--surface-color);
+  }
+}

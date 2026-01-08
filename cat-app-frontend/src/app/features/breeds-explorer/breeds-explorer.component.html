@@ -1,0 +1,112 @@
+<div class="explorer-container">
+
+  <section class="selection-section">
+    <h1>Explorador de Razas de Gatos</h1>
+    <p class="subtitle">Selecciona una raza para descubrir sus características, origen e imágenes.</p>
+    <mat-form-field appearance="outline" class="breed-select">
+      <mat-label>Elige una raza</mat-label>
+      <mat-select [(ngModel)]="selectedBreedId" (selectionChange)="onBreedSelected()">
+        <mat-option *ngFor="let breed of breeds" [value]="breed.id">
+          {{ breed.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </section>
+
+  <div *ngIf="isLoadingDetails" class="spinner-wrapper">
+    <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+  </div>
+
+  <div *ngIf="!isLoadingDetails">
+    <div *ngIf="errorMessage" class="error-message">
+      <mat-icon>error_outline</mat-icon>
+      <span>{{ errorMessage }}</span>
+    </div>
+
+    <section *ngIf="selectedBreedInfo" class="details-grid">
+      <div class="image-column">
+        <div *ngIf="selectedBreedImages.length > 0; else noImages" class="image-container main-image-wrapper">
+          
+          <button mat-icon-button class="nav-btn prev-btn" 
+                  *ngIf="selectedBreedImages.length > 1"
+                  (click)="previousImage()" 
+                  aria-label="Imagen anterior">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <img [src]="selectedBreedImages[currentImageIndex].url" 
+               alt="Imagen de {{ selectedBreedInfo.name }} ({{currentImageIndex + 1}} de {{selectedBreedImages.length}})"
+               class="carousel-image">
+
+          <button mat-icon-button class="nav-btn next-btn" 
+                  *ngIf="selectedBreedImages.length > 1"
+                  (click)="nextImage()" 
+                  aria-label="Siguiente imagen">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+          <div class="image-counter" *ngIf="selectedBreedImages.length > 1">
+            {{ currentImageIndex + 1 }} / {{ selectedBreedImages.length }}
+          </div>
+
+        </div>
+        <ng-template #noImages>
+          <div class="no-images-placeholder">
+            <mat-icon>hide_image</mat-icon>
+            <span>No hay imágenes disponibles</span>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="info-column">
+        <h2 class="breed-name">{{ selectedBreedInfo.name }}</h2>
+        <p class="breed-origin">{{ selectedBreedInfo.origin }}</p>
+        <div class="info-block">
+          <h3>Temperamento</h3>
+          <mat-chip-listbox aria-label="Temperamento">
+            <mat-chip *ngFor="let temp of selectedBreedInfo.temperament.split(', ')" class="temperament-chip" disabled>
+              {{ temp }}
+            </mat-chip>
+          </mat-chip-listbox>
+        </div>
+        <div class="info-block">
+          <h3>Descripción</h3>
+          <p class="breed-description">{{ selectedBreedInfo.description }}</p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+
+  <section class="table-section">
+    <h2>Catálogo Completo</h2>
+    <div class="filter-container">
+      <mat-form-field appearance="outline" class="filter-input">
+        <mat-label>Buscar en el catálogo...</mat-label>
+        <input matInput [(ngModel)]="searchTerm" (keyup)="applyFilter()">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div class="table-wrapper mat-elevation-z2">
+      <table mat-table [dataSource]="tableDataSource" class="breeds-table">
+        <ng-container matColumnDef="name"><th mat-header-cell *matHeaderCellDef> Nombre </th><td mat-cell *matCellDef="let breed"> {{breed.name}} </td></ng-container>
+        <ng-container matColumnDef="origin"><th mat-header-cell *matHeaderCellDef> Origen </th><td mat-cell *matCellDef="let breed"> {{breed.origin}} </td></ng-container>
+        <ng-container matColumnDef="temperament"><th mat-header-cell *matHeaderCellDef> Temperamento </th><td mat-cell *matCellDef="let breed" class="temperament-cell"> {{breed.temperament}} </td></ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="onBreedSelected(row.id)"></tr>
+      </table>
+      
+      <mat-paginator 
+        [pageSizeOptions]="[10, 25, 50]" 
+        showFirstLastButtons 
+        aria-label="Seleccionar página de razas">
+      </mat-paginator>
+
+      <div *ngIf="isLoadingBreeds" class="spinner-wrapper">
+        <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+      </div>
+    </div>
+  </section>
+
+</div>

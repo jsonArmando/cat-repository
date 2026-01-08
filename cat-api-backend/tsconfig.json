@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "es2021",
+    "module": "commonjs",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    // --- AÑADIR ESTA LÍNEA ---
+    // Le dice a TypeScript que cargue explícitamente las definiciones de tipo para Node.js y Jest.
+    // Esto resuelve los errores de 'process' y 'describe', 'it', 'expect', etc.
+    "types": ["node", "jest"] 
+  },
+  // --- AÑADIR ESTA SECCIÓN ---
+  // Le dice al compilador `tsc` que ignore estos archivos al crear el build de producción.
+  // Los archivos de prueba no deben ir en la carpeta `dist`.
+  "exclude": [
+    "node_modules",
+    "**/*.test.ts" 
+  ]
+}
